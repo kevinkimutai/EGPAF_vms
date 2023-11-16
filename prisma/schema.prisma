@@ -6,6 +6,98 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+
+
+enum VehicleType {
+  car
+  van
+}
+
+model Vehicle {
+  id         Int      @id @default(autoincrement())
+  name       String
+  make       String
+  model      String
+  year       Int
+  typeId     Int      // Use Int for type reference
+  type       Type     @relation(fields: [typeId], references: [id])
+  projectId     Int     
+  project       Project     @relation(fields: [projectId], references: [id])
+  trips      Trip[]
+  mileage    Float
+  driverId   Int      @unique
+  driver     Driver   @relation(fields: [driverId], references: [id]) 
+  createdAt  DateTime @default(now())
+
+  @@index([typeId])
+  @@index([driverId])
+  @@index([projectId])
+}
+
+model Type {
+  id        Int         @id @default(autoincrement())
+  name      VehicleType
+  imageSrc  String
+  vehicles  Vehicle[]
+}
+
+model Driver {
+  id      Int      @id @default(autoincrement())
+  first_name String
+  last_name String
+  userId String
+  vehicle Vehicle?
+}
+
+model Project {
+  id        Int       @id @default(autoincrement())
+  name      String
+  locations Location[]
+  vehicles  Vehicle[]
+}
+
+model Location {
+  id        Int      @id @default(autoincrement())
+  facility  String
+  projects  Project[]
+
+
+  // Added this line for the opposite relation field
+  tripsStart Trip[] @relation("startLocation")
+  tripsEnd   Trip[] @relation("endLocation")
+}
+
+model Trip {
+  id                 Int         @id @default(autoincrement())
+  createdAt          DateTime    @db.Date @default(now())
+  startTime          DateTime    @db.Time
+
+  // Specify the fields argument for startLocation relation
+  startLocation      Location     @relation(name: "startLocation", fields: [startLocationId], references: [id], map: "startLocationId")
+  endLocation        Location?   @relation(name: "endLocation", fields: [endLocationId], references: [id], map: "endLocationId")
+  endTime            DateTime?    @db.Time
+  kilometersCovered  Float?
+  vehicleId          Int
+  vehicle            Vehicle     @relation(fields: [vehicleId], references: [id])
+  staff              Users[]
+
+  // Add these fields for foreign key mapping
+  startLocationId    Int
+  endLocationId      Int?
+
+  @@index([vehicleId])
+}
+
+
+model Users {
+  id         Int      @id @default(autoincrement())
+  firstName  String
+  lastName   String
+  email      String
+  designation String?
+  trips      Trip[]
 }
