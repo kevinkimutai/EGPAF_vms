@@ -29,9 +29,10 @@ model Vehicle {
   project       Project     @relation(fields: [projectId], references: [id])
   trips      Trip[]
   mileage    Float
+  number_plate String
   driverId   Int      @unique
   driver     Driver   @relation(fields: [driverId], references: [id]) 
-  createdAt  DateTime @default(now())
+  createdAt   DateTime @default(now())
 
   @@index([typeId])
   @@index([driverId])
@@ -73,7 +74,6 @@ model Location {
 
 model Trip {
   id                 Int         @id @default(autoincrement())
-  createdAt          DateTime    @db.Date @default(now())
   startTime          DateTime    @db.Time
 
   // Specify the fields argument for startLocation relation
@@ -88,6 +88,8 @@ model Trip {
   // Add these fields for foreign key mapping
   startLocationId    Int
   endLocationId      Int?
+
+  createdAt DateTime @default(now())
 
   @@index([vehicleId])
 }
