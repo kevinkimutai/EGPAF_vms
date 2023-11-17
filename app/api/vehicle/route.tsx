@@ -9,9 +9,9 @@ export async function POST(req: Request) {
 
     //only Admins can create a vehicle
     //TODO:CHECK IF USER ISADMIN
-    if (!userId) {
-      return new NextResponse("Unauthorized,Please Login", { status: 401 });
-    }
+    // if (!userId) {
+    //   return new NextResponse("Unauthorized,Please Login", { status: 401 });
+    // }
 
     const {
       name,

@@ -7,10 +7,10 @@ export async function POST(req: Request) {
   try {
     const { userId } = auth();
 
-    //TODO:CHECK IF USER ISADMIN
-    if (!userId) {
-      return new NextResponse("Unauthorized,Please Login", { status: 401 });
-    }
+    // //TODO:CHECK IF USER ISADMIN
+    // if (!userId) {
+    //   return new NextResponse("Unauthorized,Please Login", { status: 401 });
+    // }
 
     const { name } = await req.json();
 

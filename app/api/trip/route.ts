@@ -8,25 +8,18 @@ export async function POST(req: Request) {
     const { userId } = auth();
 
     //only Drivers can create a Trip
-    //TODO:CHECK IF USER ISADMIN
-    if (!userId) {
-      return new NextResponse("Unauthorized,Please Login", { status: 401 });
-    }
+    // //TODO:CHECK IF USER ISADMIN
+    // if (!userId) {
+    //   return new NextResponse("Unauthorized,Please Login", { status: 401 });
+    // }
 
-    const {
-      startTime,
-      startLocationId,
-      endLocationId,
-      endTime,
-      vehicleId,
-      staff,
-    } = await req.json();
+    const { startLocationId, endLocationId, vehicleId, staff, reasonForTrip } =
+      await req.json();
 
     const newTrip = await db.trip.create({
       //@ts-ignore
       data: {
-        startTime,
-        endTime,
+        reasonForTrip,
         startLocation: {
           connect: {
             id: startLocationId,

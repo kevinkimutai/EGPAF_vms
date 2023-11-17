@@ -10,7 +10,7 @@ export async function GET(
   try {
     const trip = await db.trip.findUnique({
       where: {
-        id: params.tripId,
+        id: +params.tripId,
       },
       include: {
         vehicle: true,

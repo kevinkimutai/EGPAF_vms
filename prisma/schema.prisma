@@ -13,10 +13,9 @@ datasource db {
 
 
 enum VehicleType {
-  car
+  suv
   van
 }
-
 
 
 model Vehicle {
@@ -76,7 +75,7 @@ model Location {
 
 model Trip {
   id                 Int         @id @default(autoincrement())
-  startTime          DateTime    @db.Time
+  startTime          DateTime    @default(now())
 
   // Specify the fields argument for startLocation relation
   startLocation      Location     @relation(name: "startLocation", fields: [startLocationId], references: [id], map: "startLocationId")

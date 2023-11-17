@@ -7,11 +7,11 @@ export async function POST(req: Request) {
   try {
     const { userId } = auth();
 
-    //only Admins can create a vehicle
-    //TODO:CHECK IF USER ISADMIN
-    if (!userId) {
-      return new NextResponse("Unauthorized,Please Login", { status: 401 });
-    }
+    // //only Admins can create a vehicle
+    // //TODO:CHECK IF USER ISADMIN
+    // if (!userId) {
+    //   return new NextResponse("Unauthorized,Please Login", { status: 401 });
+    // }
 
     const { name, imageSrc } = await req.json();
 
