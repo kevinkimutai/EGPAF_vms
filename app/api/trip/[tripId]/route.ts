@@ -5,19 +5,24 @@ export async function PATCH(req: Request) {}
 export async function DELETE(req: Request) {}
 export async function GET(
   req: Request,
-  { params }: { params: { vehicleId: number } }
+  { params }: { params: { tripId: number } }
 ) {
   try {
-    const vehicle = await db.vehicle.findUnique({
+    const trip = await db.trip.findUnique({
       where: {
-        id: params.vehicleId,
+        id: params.tripId,
       },
-      include: { type: true, trips: true, driver: true, project: true },
+      include: {
+        vehicle: true,
+        staff: true,
+        startLocation: true,
+        endLocation: true,
+      },
     });
 
-    return NextResponse.json(vehicle);
+    return NextResponse.json(trip);
   } catch (error) {
-    console.log("[GET ONE VEHICLE]", error);
+    console.log("[GET ONE TRIP]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

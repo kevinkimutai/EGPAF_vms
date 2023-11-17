@@ -13,47 +13,18 @@ export async function POST(req: Request) {
       return new NextResponse("Unauthorized,Please Login", { status: 401 });
     }
 
-    const {
-      name,
-      make,
-      model,
-      year,
-      typeId,
-      projectId,
-      mileage,
-      number_plate,
-      driverId,
-    } = await req.json();
+    const { name, imageSrc } = await req.json();
 
-    const newVehicle = await db.vehicle.create({
+    const newType = await db.type.create({
       data: {
         name,
-        make,
-        model,
-        year,
-        mileage,
-        number_plate,
-        type: {
-          connect: {
-            id: typeId,
-          },
-        },
-        project: {
-          connect: {
-            id: projectId,
-          },
-        },
-        driver: {
-          connect: {
-            id: driverId,
-          },
-        },
+        imageSrc,
       },
     });
 
-    return NextResponse.json(newVehicle);
+    return NextResponse.json(newType);
   } catch (error) {
-    console.error("[CREATE VEHICLE]", error);
+    console.error("[CREATE type]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
@@ -68,13 +39,13 @@ export async function GET(req: Request) {
       return new NextResponse("Unauthorized,Please Login", { status: 401 });
     }
 
-    const vehicles = await db.vehicle.findMany({
-      include: { type: true, trips: true, driver: true, project: true },
+    const types = await db.type.findMany({
+      include: { vehicles: true },
     });
 
-    return NextResponse.json(vehicles);
+    return NextResponse.json(types);
   } catch (error) {
-    console.error("[GET ALL VEHICLES]", error);
+    console.error("[GET ALL typeS]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

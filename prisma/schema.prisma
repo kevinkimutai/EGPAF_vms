@@ -17,6 +17,8 @@ enum VehicleType {
   van
 }
 
+
+
 model Vehicle {
   id         Int      @id @default(autoincrement())
   name       String
@@ -84,6 +86,7 @@ model Trip {
   vehicleId          Int
   vehicle            Vehicle     @relation(fields: [vehicleId], references: [id])
   staff              Users[]
+  reasonForTrip      String
 
   // Add these fields for foreign key mapping
   startLocationId    Int
