@@ -8,53 +8,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Trip, Users, Vehicle } from "@prisma/client";
+import { Button } from "../ui/button";
+import { formatDate } from "../../lib/formatDate/formatDate";
 
-const invoices = [
-  {
-    invoice: "INV001",
-    paymentStatus: "Paid",
-    totalAmount: "$250.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV002",
-    paymentStatus: "Pending",
-    totalAmount: "$150.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV003",
-    paymentStatus: "Unpaid",
-    totalAmount: "$350.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV004",
-    paymentStatus: "Paid",
-    totalAmount: "$450.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV005",
-    paymentStatus: "Paid",
-    totalAmount: "$550.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV006",
-    paymentStatus: "Pending",
-    totalAmount: "$200.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV007",
-    paymentStatus: "Unpaid",
-    totalAmount: "$300.00",
-    paymentMethod: "Credit Card",
-  },
-];
+type ComponentProps = {
+  trips: any[];
+};
 
-export function TripTable() {
+export function TripTable({ trips }: ComponentProps) {
   return (
     <Table>
       <TableCaption>Your Todays Trips.</TableCaption>
@@ -67,17 +29,28 @@ export function TripTable() {
           <TableHead>End_Time</TableHead>
           <TableHead>End_Location</TableHead>
           <TableHead>Project</TableHead>
+          <TableHead>Date</TableHead>
           <TableHead>Edit/Complete</TableHead>
           <TableHead className="text-right">Kms</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {invoices.map((invoice) => (
-          <TableRow key={invoice.invoice}>
-            <TableCell className="font-medium">{invoice.invoice}</TableCell>
-            <TableCell>{invoice.paymentStatus}</TableCell>
-            <TableCell>{invoice.paymentMethod}</TableCell>
-            <TableCell className="text-right">{invoice.totalAmount}</TableCell>
+        {trips.map((trip) => (
+          <TableRow key={trip?.id}>
+            <TableCell className="font-medium">{trip.id}</TableCell>
+            <TableCell>Incomplete</TableCell>
+            <TableCell>{formatDate(trip.startTime)}</TableCell>
+            <TableCell>{trip.startLocation.facility}</TableCell>
+            <TableCell>{formatDate(trip.endTime)}</TableCell>
+            <TableCell>{trip.endLocation.facility}</TableCell>
+            <TableCell>{trip.vehicle.project.name}</TableCell>
+            <TableCell>{formatDate(trip.createdAt)}</TableCell>{" "}
+            <TableCell>
+              <Button>Finish Trip</Button>
+            </TableCell>
+            <TableCell className="text-right">
+              {trip.kilometersCovered}
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>

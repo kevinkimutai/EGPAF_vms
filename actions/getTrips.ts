@@ -1,19 +1,11 @@
 import db from "../lib/database/dbConnect";
 
 export async function getTripsToday() {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
   try {
     const trips = await db.trip.findMany({
-      where: {
-        createdAt: {
-          gte: today,
-          lt: new Date(today.getTime() + 24 * 60 * 60 * 1000),
-        },
-      },
       include: {
         vehicle: {
-          include: { driver: true, project: true },
+          include: { driver: true },
         },
         startLocation: true,
         endLocation: true,

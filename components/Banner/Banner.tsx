@@ -5,7 +5,11 @@ import Logo from "../../public/images/logo-egpaf-removebg-preview.png";
 import Image from "next/image";
 import { Button } from "../ui/button";
 
-const Banner = () => {
+type ComponentProps = {
+  open: () => void;
+};
+
+const Banner = ({ open }: ComponentProps) => {
   return (
     <div className="flex justify-between items-center p-4 bg-emerald-100 rounded-2xl w-1/2 mb-8">
       <Image
@@ -19,7 +23,9 @@ const Banner = () => {
         <p className="mb-4 font-semibold">
           Welcome To EGPAF Vehicle Management System.
         </p>
-        <Button className="w-fit ml-auto">Start New Trip</Button>
+        <Button className="w-fit ml-auto" onClick={open}>
+          Start New Trip
+        </Button>
       </div>
     </div>
   );
