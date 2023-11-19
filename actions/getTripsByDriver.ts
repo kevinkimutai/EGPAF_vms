@@ -27,3 +27,23 @@ export async function getTripsToday() {
     throw new Error(error);
   }
 }
+
+export async function getAllTripsByDriver() {
+  try {
+    const trips = await db.trip.findMany({
+      include: {
+        vehicle: {
+          include: { driver: true, project: true },
+        },
+        startLocation: true,
+        endLocation: true,
+        staff: true,
+      },
+    });
+
+    return trips;
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(error);
+  }
+}

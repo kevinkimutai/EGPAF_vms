@@ -17,7 +17,6 @@ export async function POST(req: Request) {
       await req.json();
 
     const newTrip = await db.trip.create({
-      //@ts-ignore
       data: {
         reasonForTrip,
         startLocation: {
