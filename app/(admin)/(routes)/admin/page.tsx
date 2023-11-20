@@ -1,10 +1,13 @@
+import { getVehicles } from "@/actions/getVehicles";
 import OverviewCard from "@/components/Overview/OverviewCard";
 import { TripTable } from "@/components/Table/TripTable";
+import { TripVehicleTable } from "@/components/Table/TripVehicleTable";
 import UserCard from "@/components/Users/UserCard";
 import { VehicleCard } from "@/components/Vehicle/VehicleCard";
 import React from "react";
 
-const page = () => {
+const page = async () => {
+  const vehicles = await getVehicles();
   return (
     <div className="ml-[20%] p-4 pt-[10%]">
       <h1 className="font-semibold text-emerald-700 text-xl mb-4">Overview</h1>
@@ -21,14 +24,19 @@ const page = () => {
 
       <h2 className="font-semibold text-emerald-700 text-lg mb-4">Vehicles</h2>
       <div className="flex flex-wrap gap-8 mb-8">
-        <VehicleCard />
-        <VehicleCard />
+        {vehicles.map((vehicle) => (
+          <>
+            {/* @ts-ignore */}
+            <VehicleCard key={vehicle.id} {...vehicle} />
+          </>
+        ))}
       </div>
 
       {/* All TRIPS */}
       <div className="mb-8">
         <h2 className="font-semibold text-emerald-700 text-lg mb-2">Trips</h2>
-        <TripTable />
+        {/* @ts-ignore */}
+        <TripVehicleTable vehicles={vehicles} />
       </div>
 
       {/* MOST VISITED lOCATIONS THIS MONTH */}
@@ -36,7 +44,7 @@ const page = () => {
         <h2 className="font-semibold text-emerald-700 text-lg mb-2">
           Facilities By Visit
         </h2>
-        <TripTable />
+        {/* <TripTable /> */}
       </div>
 
       {/* MOST VISITING USER */}
@@ -55,7 +63,7 @@ const page = () => {
           <UserCard />
         </div>
 
-        <TripTable />
+        {/* <TripTable /> */}
       </div>
     </div>
   );

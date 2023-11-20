@@ -10,9 +10,10 @@ import TripModal from "../Modal/TripModal";
 type ComponentProps = {
   trips: any[];
   vehicleId: number;
+  allTrips: any[];
 };
 
-const HomeWrapper = ({ trips, vehicleId }: ComponentProps) => {
+const HomeWrapper = ({ trips, vehicleId, allTrips }: ComponentProps) => {
   const { isOpen, onOpen, onClose } = useTripModal();
 
   const openModal = () => {
@@ -24,8 +25,10 @@ const HomeWrapper = ({ trips, vehicleId }: ComponentProps) => {
       <Banner open={openModal} />
       {/* TABLE TODAYS TRIPS */}
       <h2 className="font-semibold text-xl mb-4">Today&apos;s Trips</h2>
-
       <TripTable trips={trips} />
+
+      <h2 className="font-semibold text-xl mb-4 mt-8">All Trips</h2>
+      <TripTable trips={allTrips} />
 
       {isOpen && (
         <TripModal isOpen={isOpen} onClose={onClose} vehicleId={vehicleId} />

@@ -1,3 +1,7 @@
+import { getDriverCount } from "@/actions/getDriverCount";
+import { getKmsCoveredCount } from "@/actions/getKmsCount";
+import { getProjectCount } from "@/actions/getProjectCount";
+import { getVehicleCount } from "@/actions/getVehicleCount";
 import { IconProps } from "@radix-ui/react-icons/dist/types";
 import {
   Bus,
@@ -20,7 +24,7 @@ type CssType = {
   title: string;
 };
 
-const OverviewCard = ({ type }: ComponentProps) => {
+const OverviewCard = async ({ type }: ComponentProps) => {
   let vehicleCss: CssType = {
     outerBg: "",
     iconBg: "",
@@ -28,12 +32,16 @@ const OverviewCard = ({ type }: ComponentProps) => {
     title: "",
   };
 
+  let count: number;
+
   switch (type) {
     case "vehicle":
       vehicleCss.outerBg = "bg-yellow-100";
       vehicleCss.iconBg = "bg-yellow-700";
       vehicleCss.icon = <Bus className="text-yellow-700" />;
       vehicleCss.title = "Vehicles";
+
+      count = await getVehicleCount();
       break;
 
     case "program":
@@ -41,6 +49,8 @@ const OverviewCard = ({ type }: ComponentProps) => {
       vehicleCss.iconBg = "bg-pink-700";
       vehicleCss.icon = <FolderKanban className="text-pink-700" />;
       vehicleCss.title = "Programs";
+
+      count = await getProjectCount();
       break;
 
     case "driver":
@@ -48,6 +58,8 @@ const OverviewCard = ({ type }: ComponentProps) => {
       vehicleCss.iconBg = "bg-sky-700";
       vehicleCss.icon = <Users2 className="text-sky-700" />;
       vehicleCss.title = "Drivers";
+
+      count = await getDriverCount();
       break;
 
     case "distance":
@@ -55,6 +67,8 @@ const OverviewCard = ({ type }: ComponentProps) => {
       vehicleCss.iconBg = "bg-purple-700";
       vehicleCss.icon = <Ruler className="text-purple-700" />;
       vehicleCss.title = "Distance/Today";
+
+      count = await getKmsCoveredCount();
       break;
 
     default:
@@ -68,7 +82,8 @@ const OverviewCard = ({ type }: ComponentProps) => {
       </div>
       <div className="flex flex-col justify-end">
         <h2 className="font-semibold ">{vehicleCss.title}</h2>
-        <p className="text-xl font-bold text-emerald-800 text-right">32</p>
+        {/* @ts-ignore */}
+        <p className="text-xl font-bold text-emerald-800 text-right">{count}</p>
       </div>
     </div>
   );

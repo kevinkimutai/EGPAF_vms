@@ -1,3 +1,4 @@
+//@ts-nocheck
 "use client";
 
 import {
@@ -10,7 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Trip, Users, Vehicle } from "@prisma/client";
+import { Driver, Project, Trip, Type, Users, Vehicle } from "@prisma/client";
 import { Button } from "../ui/button";
 import { formatDate } from "../../lib/formatDate/formatDate";
 import { getTimeFromTimestamp } from "../../lib/formatDate/formatTime";
@@ -19,17 +20,37 @@ import { useState } from "react";
 import TripPatchModal from "../Modal/TripPatchModal";
 
 type ComponentProps = {
-  trips: any[];
+  vehicles: Vehicle & { type: Type } & { project: Project } & {
+    driver: Driver;
+  } & {
+      trips: Trip & { endLocation: Location } & { startLocation: Location }[];
+    }[];
 };
 
-export function TripTable({ trips }: ComponentProps) {
-  const { isOpen, onOpen, onClose } = useTripPatchModal();
-  const [tripId, setTripId] = useState<number>();
+export function TripVehicleTable({ vehicles }: ComponentProps) {
+  const [index, setIndex] = useState(0);
+  const [trips, setTrips] = useState(vehicles[index].trips);
 
   return (
     <>
+      <div className="flex gap-4 justify-end items-center">
+        {vehicles.map((vehicle, indx) => (
+          <p
+            className={`px-4 py-2 mb-8 text-sm cursor-pointer rounded-2xl text-center flex justify-center items-center ${
+              indx === index
+                ? "bg-emerald-700 text-white shadow-md"
+                : "bg-emerald-100"
+            }`}
+            key={vehicle.id}
+            onClick={() => setIndex(indx)}
+          >
+            {vehicle.number_plate}
+          </p>
+        ))}
+      </div>
+
       <Table>
-        <TableCaption>Your Todays Trips.</TableCaption>
+        <TableCaption></TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead className="w-[100px]">Id.</TableHead>
@@ -40,7 +61,7 @@ export function TripTable({ trips }: ComponentProps) {
             <TableHead>End_Location</TableHead>
             <TableHead>Project</TableHead>
             <TableHead>Date</TableHead>
-            <TableHead>Edit/Complete</TableHead>
+            <TableHead>Staff</TableHead>
             <TableHead className="text-right">Kms</TableHead>
           </TableRow>
         </TableHeader>
@@ -70,18 +91,7 @@ export function TripTable({ trips }: ComponentProps) {
               <TableCell>{trip.vehicle.project.name}</TableCell>
               <TableCell>{formatDate(trip.createdAt)}</TableCell>{" "}
               <TableCell>
-                {!trip.endTime ? (
-                  <Button
-                    onClick={() => {
-                      setTripId(trip?.id);
-                      onOpen();
-                    }}
-                  >
-                    Finish Trip
-                  </Button>
-                ) : (
-                  <p className="font-semibold">Completed</p>
-                )}
+                <p className="font-semibold">Completed</p>
               </TableCell>
               <TableCell className="text-right">
                 {trip.kilometersCovered}
@@ -98,10 +108,6 @@ export function TripTable({ trips }: ComponentProps) {
           </TableRow>
         </TableFooter>
       </Table>
-
-      {isOpen && (
-        <TripPatchModal isOpen={isOpen} onClose={onClose} tripId={tripId} />
-      )}
     </>
   );
 }

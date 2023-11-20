@@ -47,7 +47,7 @@ const page = async () => {
         }}
       />
       <main className="px-4 sm:px-8 py-4 pt-[20vh]">
-        <HomeWrapper trips={driverTrips} vehicleId={vehicleId} />
+        <HomeWrapper trips={driverTrips} vehicleId={vehicleId} allTrips={allDriverTrips}/>
       </main>
     </>
   );
