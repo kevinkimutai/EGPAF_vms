@@ -1,5 +1,9 @@
+import { getLocationById } from "@/actions/getLocationById";
+import { getLocationTrip } from "@/actions/getLocationTrip";
+import { getStaffTrip } from "@/actions/getTripStaff";
 import { getVehicles } from "@/actions/getVehicles";
 import OverviewCard from "@/components/Overview/OverviewCard";
+import { LocationTable } from "@/components/Table/LocationTable";
 import { TripTable } from "@/components/Table/TripTable";
 import { TripVehicleTable } from "@/components/Table/TripVehicleTable";
 import UserCard from "@/components/Users/UserCard";
@@ -8,6 +12,10 @@ import React from "react";
 
 const page = async () => {
   const vehicles = await getVehicles();
+  const locationTrips = await getLocationTrip();
+  const staffTrip = await getStaffTrip();
+
+  console.log("TRIPS", staffTrip);
   return (
     <div className="ml-[20%] p-4 pt-[10%]">
       <h1 className="font-semibold text-emerald-700 text-xl mb-4">Overview</h1>
@@ -44,7 +52,7 @@ const page = async () => {
         <h2 className="font-semibold text-emerald-700 text-lg mb-2">
           Facilities By Visit
         </h2>
-        {/* <TripTable /> */}
+        <LocationTable locations={locationTrips} />
       </div>
 
       {/* MOST VISITING USER */}
