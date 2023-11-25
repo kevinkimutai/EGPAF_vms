@@ -42,7 +42,7 @@ const SideBar = () => {
   const pathname = usePathname();
 
   return (
-    <aside className="w-1/5 bg-emerald-700 fixed bottom-0 top-0 left-0 z-10 text-white">
+    <aside className="hidden sm:block w-1/5 bg-emerald-700 fixed bottom-0 top-0 left-0 z-10 text-white">
       <ul className="mt-[20vh]">
         {adminRoutes.map(({ route, label, icon: Icon }) => (
           <Link key={label} href={route}>

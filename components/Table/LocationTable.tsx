@@ -32,7 +32,7 @@ export async function LocationTable({ locations }: ComponentProps) {
   const facilities = await enrichArrayWithFacilityNames(locations);
 
   return (
-    <div className="w-1/2">
+    <div className="w-full md:w-1/2">
       <Table>
         <TableCaption>Facilities By Visit.</TableCaption>
         <TableHeader>

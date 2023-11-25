@@ -12,6 +12,7 @@ export async function getVehicles() {
             vehicle: { include: { project: true } },
           },
           orderBy: { createdAt: "desc" },
+          take: 10,
         },
         driver: true,
         type: true,

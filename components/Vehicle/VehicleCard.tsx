@@ -19,7 +19,7 @@ type ComponentProps = Vehicle & { type: Type } & { project: Project } & {
 
 export function VehicleCard(props: ComponentProps) {
   return (
-    <Card className="w-[300px]">
+    <Card className="w-[250px] md:w-[300px]">
       <CardHeader>
         <CardTitle>{props.number_plate}</CardTitle>
         <CardDescription>{props.project.name}</CardDescription>

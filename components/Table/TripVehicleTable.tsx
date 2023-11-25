@@ -16,7 +16,7 @@ import { Button } from "../ui/button";
 import { formatDate } from "../../lib/formatDate/formatDate";
 import { getTimeFromTimestamp } from "../../lib/formatDate/formatTime";
 import useTripPatchModal from "../../hooks/useTripPatchModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TripPatchModal from "../Modal/TripPatchModal";
 
 type ComponentProps = {
@@ -30,6 +30,24 @@ type ComponentProps = {
 export function TripVehicleTable({ vehicles }: ComponentProps) {
   const [index, setIndex] = useState(0);
   const [trips, setTrips] = useState(vehicles[index].trips);
+
+  const [totalKmCovered, setKmCovered] = useState(0);
+
+  useEffect(() => {
+    function calculateSumOfKilometersCovered(tripsArray) {
+      const total = tripsArray.reduce((sum, trip) => {
+        // Check if the trip has kilometersCovered property and it is not null
+        if (trip.kilometersCovered !== null) {
+          return sum + trip.kilometersCovered;
+        }
+        return sum;
+      }, 0);
+
+      setKmCovered(total);
+    }
+
+    calculateSumOfKilometersCovered(trips);
+  }, [trips]);
 
   return (
     <>
@@ -103,7 +121,7 @@ export function TripVehicleTable({ vehicles }: ComponentProps) {
           <TableRow>
             <TableCell colSpan={3}>Total</TableCell>
             <TableCell className="text-right font-semibold">
-              Km 2,500.00
+              {totalKmCovered} KM
             </TableCell>
           </TableRow>
         </TableFooter>

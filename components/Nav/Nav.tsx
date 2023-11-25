@@ -17,7 +17,9 @@ const Nav = () => {
           className="w-[10rem] object-contain"
         />
 
-        <p className="font-semibold ml-8 text-xl">Vehicle Management System</p>
+        <p className="font-semibold ml-8 text-xl hidden sm:block  ">
+          Vehicle Management System
+        </p>
       </div>
       <UserButton afterSignOutUrl="/" />
     </nav>

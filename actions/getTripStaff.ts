@@ -51,7 +51,15 @@ export const getStaffTrip = async () => {
     return acc;
   }, {});
 
-  console.log(staffGroupedById);
+  const sortedData = Object.fromEntries(
+    Object.entries(staffGroupedById).sort(
+      (a: any, b: any) => b[1].count - a[1].count
+    )
+  );
 
-  return staffGroupedById;
+  const slicedData = Object.fromEntries(Object.entries(sortedData).slice(0, 4));
+
+  console.log(slicedData);
+
+  return slicedData;
 };
