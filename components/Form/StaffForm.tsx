@@ -86,6 +86,7 @@ const StaffForm = ({ onBack, submitForm }: ComponentProps) => {
                 <SelectContent position="popper">
                   {users?.map((user) => (
                     <>
+                      {/* @ts-ignore */}
                       <SelectItem value={user} id={user.id}>
                         {user.firstName} {user.lastName}
                       </SelectItem>

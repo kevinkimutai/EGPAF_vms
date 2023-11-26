@@ -26,7 +26,7 @@ const page = async () => {
         ))}
       </div>
       {/* VEHICLE CRUD TABLE */}
-      {/* <VehicleTable /> */}
+     <VehicleTable /> 
     </div>
   );
 };

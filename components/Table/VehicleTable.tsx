@@ -16,7 +16,7 @@ import {
 
 import { Button } from "../ui/button";
 
-export async function VehicleTable() {
+export function VehicleTable() {
   const [vehicles, setVehicles] = useState([]);
 
   useEffect(() => {
@@ -47,12 +47,13 @@ export async function VehicleTable() {
             <TableHead>Edit/Delete</TableHead>
           </TableRow>
         </TableHeader>
-        {/* <TableBody>
+        <TableBody>
           {vehicles?.map((vehicle: any) => (
             <TableRow key={vehicle.id}>
               <TableCell className=" ">{vehicle.name}</TableCell>
               <TableCell className=" ">{vehicle.make}</TableCell>
               <TableCell className=" ">{vehicle.model}</TableCell>
+              <TableCell className=" ">{vehicle.year}</TableCell>
               <TableCell className=" ">{vehicle.project.name}</TableCell>
               <TableCell className=" ">
                 {vehicle.driver.first_name} {vehicle.driver.last_name}
@@ -62,17 +63,17 @@ export async function VehicleTable() {
               <TableCell className=" ">
                 <div className="flex gap-4">
                   {" "}
-                  <Button variant={"outline"}>
-                    <Pencil1Icon />
-                  </Button>
-                  <Button>
-                    <TrashIcon />
-                  </Button>
+                  <p className="p-2 bg-black rounded-md cursor-pointer ">
+                    <Pencil1Icon className="text-white" />
+                  </p>
+                  <p className="p-2 bg-red-700 rounded-md cursor-pointer">
+                    <TrashIcon className="text-white" />
+                  </p>
                 </div>
               </TableCell>
             </TableRow>
           ))}
-        </TableBody> */}
+        </TableBody>
       </Table>
     </div>
   );
