@@ -8,7 +8,7 @@ import { TripVehicleTable } from "@/components/Table/TripVehicleTable";
 import { VehicleTable } from "@/components/Table/VehicleTable";
 import { VehicleCard } from "@/components/Vehicle/VehicleCard";
 import DriverWrapper from "@/components/Wrapper/DriverWrapper";
-import VehicleWrapper from "@/components/Wrapper/VehicleWrapper";
+import VehicleWrapper from "@/components/Wrapper/VehicleFnWrapper";
 
 import React from "react";
 

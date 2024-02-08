@@ -6,8 +6,23 @@ import { TripVehicleTable } from "@/components/Table/TripVehicleTable";
 import { Button } from "@/components/ui/button";
 import React from "react";
 
-const page = async () => {
-  const vehicles = await getVehicles();
+type Props = {
+  params: {};
+  searchParams: any;
+};
+
+const page = async (props: Props) => {
+  let vehicles;
+  console.log(props.searchParams);
+  if (props.searchParams.from && props.searchParams.to) {
+    vehicles = await getVehicles(
+      props.searchParams.from,
+      props.searchParams.to
+    );
+  } else {
+    vehicles = await getVehicles();
+  }
+
   return (
     <div className="ml-0 sm:ml-[20%] p-4 pt-[20vh] ">
       <h1 className="font-semibold text-emerald-700 text-xl mb-4">Trips</h1>

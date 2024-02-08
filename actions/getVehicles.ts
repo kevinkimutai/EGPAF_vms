@@ -1,6 +1,6 @@
 import db from "../lib/database/dbConnect";
 
-export async function getVehicles() {
+export async function getVehicles(from?: any, to?: any) {
   try {
     const vehicles = await db.vehicle.findMany({
       include: {
@@ -17,6 +17,19 @@ export async function getVehicles() {
         driver: true,
         type: true,
         project: true,
+      },
+      where: {
+        trips: {
+          every: {
+            startTime: {
+              // If 'from' is provided, filter trips with startTime greater than or equal to 'from'
+              gte: from ? new Date(from) : undefined,
+              // If 'to' is provided, filter trips with startTime less than or equal to 'to'
+              lte: to ? new Date(to) : undefined,
+            },
+          },
+          // Filter trips based on start date
+        },
       },
     });
 
