@@ -66,7 +66,7 @@ const OverviewCard = async ({ type }: ComponentProps) => {
       vehicleCss.outerBg = "bg-purple-100";
       vehicleCss.iconBg = "bg-purple-700";
       vehicleCss.icon = <Ruler className="text-purple-700" />;
-      vehicleCss.title = "Distance/Today";
+      vehicleCss.title = "Total Distance/ Today";
 
       count = await getKmsCoveredCount();
       break;

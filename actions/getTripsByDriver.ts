@@ -31,6 +31,12 @@ export async function getTripsToday() {
 export async function getAllTripsByDriver() {
   try {
     const trips = await db.trip.findMany({
+      orderBy: [
+        {
+          createdAt: "desc",
+        },
+      ],
+
       include: {
         vehicle: {
           include: { driver: true, project: true },

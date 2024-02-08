@@ -12,12 +12,14 @@ import {
 } from "@/components/ui/card";
 import Image from "next/image";
 import { Driver, Location, Project, Trip, Type, Vehicle } from "@prisma/client";
+import { getKmsCoveredByVehicle } from "@/actions/getKmsCoveredByEachVehicle";
 
 type ComponentProps = Vehicle & { type: Type } & { project: Project } & {
   driver: Driver;
 } & { trips: Trip[] & { endLocation: Location } };
 
 export function VehicleCard(props: ComponentProps) {
+  console.log("TRIPS", props);
   return (
     <Card className="w-[250px] md:w-[300px]">
       <CardHeader>
@@ -60,7 +62,7 @@ export function VehicleCard(props: ComponentProps) {
         {/*  */}
         <div className="flex justify-between items-center">
           <p className="text-sm">Distance/ Today</p>
-          <p>210 KM</p>
+          <p>{getKmsCoveredByVehicle(props.trips[0].vehicleId)} KM</p>
         </div>
         {/*  */}
       </CardContent>

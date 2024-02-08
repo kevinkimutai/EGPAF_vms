@@ -3,6 +3,7 @@ import { getLocationTrip } from "@/actions/getLocationTrip";
 import { getStaffTrip } from "@/actions/getTripStaff";
 import { getVehicles } from "@/actions/getVehicles";
 import OverviewCard from "@/components/Overview/OverviewCard";
+import PaginationComponent from "@/components/Pagination/PaginationComponent";
 import { LocationTable } from "@/components/Table/LocationTable";
 import { TripTable } from "@/components/Table/TripTable";
 import { TripVehicleTable } from "@/components/Table/TripVehicleTable";
@@ -64,6 +65,7 @@ const page = async () => {
           Facilities By Visit
         </h2>
         <LocationTable locations={locationTrips} />
+        <PaginationComponent />
       </div>
 
       {/* MOST VISITING USER */}

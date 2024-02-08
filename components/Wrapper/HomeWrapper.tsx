@@ -6,6 +6,7 @@ import { TripTable } from "../Table/TripTable";
 import useTripModal from "@/hooks/useTripModal";
 import Modal from "../Modal/Modal";
 import TripModal from "../Modal/TripModal";
+import PaginationComponent from "../Pagination/PaginationComponent";
 
 type ComponentProps = {
   trips: any[];
@@ -29,6 +30,8 @@ const HomeWrapper = ({ trips, vehicleId, allTrips }: ComponentProps) => {
 
       <h2 className="font-semibold text-xl mb-4 mt-8">All Trips</h2>
       <TripTable trips={allTrips} />
+      {/*PAGINATION */}
+      <PaginationComponent />
 
       {isOpen && (
         <TripModal isOpen={isOpen} onClose={onClose} vehicleId={vehicleId} />
