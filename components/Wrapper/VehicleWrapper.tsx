@@ -20,14 +20,15 @@ const VehicleWrapper = ({ vehicles }: any) => {
         <div className="flex justify-end items-center mb-4">
           <VehicleFnWrapper open={onOpen} />
         </div>
-        <div className="flex overflow-x-scroll no-scrollbar gap-8 mb-8">
-          {vehicles.map((vehicle: any) => (
-            <>
-              {/* @ts-ignore */}
-              <VehicleCard key={vehicle.id} {...vehicle} />
-            </>
-          ))}
-        </div>
+        {/* <div className="flex overflow-x-scroll no-scrollbar gap-8 mb-8"> */}
+        {/* {vehicles.map((vehicle: any) => ( */}
+        <>
+          {/* @ts-ignore */}
+          {/* <VehicleCard key={vehicle.id} {...vehicle} /> */}
+        </>
+        {/* ))} */}
+        {/* </div> */}
+
         {/* VEHICLE CRUD TABLE */}
         <VehicleTable />
       </div>

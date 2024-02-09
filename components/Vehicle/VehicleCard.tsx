@@ -54,14 +54,19 @@ export function VehicleCard(props: ComponentProps) {
 
           <p className="text-sm font-semibold">
             {/* @ts-ignore */}
-            {props.trips[0].endLocation.facility}
+            {props.trips[0] ? props.trips[0].endLocation.facility : null}
           </p>
         </div>
 
         {/*  */}
         <div className="flex justify-between items-center">
           <p className="text-sm">Distance/ Today</p>
-          <p>{getKmsCoveredByVehicle(props.trips[0].vehicleId)} KM</p>
+          <p>
+            {props.trips[0]
+              ? getKmsCoveredByVehicle(props.trips[0].vehicleId)
+              : null}
+            KM
+          </p>
         </div>
         {/*  */}
       </CardContent>

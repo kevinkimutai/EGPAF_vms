@@ -12,7 +12,7 @@ import React from "react";
 
 const page = async () => {
   const vehicles = await getVehicles();
-  return <VehicleWrapper vehicles={vehicles}></VehicleWrapper>;
+  return <VehicleWrapper vehicles={vehicles} />;
 };
 
 export default page;

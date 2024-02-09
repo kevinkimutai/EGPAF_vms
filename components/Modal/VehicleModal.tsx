@@ -16,6 +16,7 @@ import VehicleNumberPlateForm from "../Form/VehicleNumberPlateForm";
 import VehicleMileageForm from "../Form/VehicleMileageForm";
 import VehicleTypeForm from "../Form/VehicleTypeForm";
 import VehicleDriverForm from "../Form/VehicleDriver";
+import VehicleProjectForm from "../Form/VehicleProjectForm";
 
 enum STEPS {
   DESCRIPTION = 0,
@@ -40,25 +41,25 @@ const VehicleModal = ({ isOpen, onClose }: ModalProps) => {
     if (step === 5) {
       //SUBMIT
       setFormData((prev) => ({ ...prev, ...data }));
-
-      let vehicleData = { ...formData };
-
-      console.log(vehicleData);
-
-      // const res = await fetch("/api/vehicle", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(vehicleData),
-      // });
-
-      // if (res.ok) {
-      //   onClose();
-      //   router.refresh();
-      //   toast.success("Successfully created vehicle");
-      // }
-
+      //@ts-ignore
+      let vehicleData = {
+        ...formData,
+        number_plate: formData?.plate,
+        mileage: Number(formData?.mileage),
+        driverId: formData?.driverId,
+      };
+      const res = await fetch("/api/vehicle", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(vehicleData),
+      });
+      if (res.ok) {
+        onClose();
+        router.refresh();
+        toast.success("Successfully created vehicle");
+      }
       //TODO:ADD TOAST NOTIFICATIONS
     } else {
       setStep((prevState) => prevState + 1);
@@ -110,6 +111,15 @@ const VehicleModal = ({ isOpen, onClose }: ModalProps) => {
     };
     FormComponent = FormComponent = (
       <VehicleTypeForm onBack={onBack} submitForm={handleSubmit} />
+    );
+  }
+  if (step === STEPS.PROJECT) {
+    header = {
+      title: "Project",
+      desc: "Assign Project To Vehicle",
+    };
+    FormComponent = FormComponent = (
+      <VehicleProjectForm onBack={onBack} submitForm={handleSubmit} />
     );
   }
   if (step === STEPS.DRIVER) {

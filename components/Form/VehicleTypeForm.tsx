@@ -48,7 +48,9 @@ const VehicleTypeForm = ({ onBack, submitForm }: ComponentProps) => {
   const submitHandler = () => {
     if (!startVehicle) return;
 
-    submitForm(startVehicle.id);
+    let data = { typeId: startVehicle.id };
+
+    submitForm(data);
   };
 
   return (
@@ -67,12 +69,7 @@ const VehicleTypeForm = ({ onBack, submitForm }: ComponentProps) => {
               <SelectTrigger id="startLocation">
                 <SelectValue placeholder="Select">
                   {startVehicle ? (
-                    <Image
-                      width={100}
-                      height={100}
-                      src={startVehicle?.imageSrc}
-                      alt="vehicle-type"
-                    />
+                    startVehicle.name
                   ) : (
                     <span style={{ color: "gray" }}>Select a type</span>
                   )}
@@ -82,7 +79,7 @@ const VehicleTypeForm = ({ onBack, submitForm }: ComponentProps) => {
                 {vehicleType?.map((veh) => (
                   <>
                     <SelectItem value={veh} id={veh.id}>
-                      {veh.imageSrc}
+                      {veh.name}
                     </SelectItem>
                   </>
                 ))}

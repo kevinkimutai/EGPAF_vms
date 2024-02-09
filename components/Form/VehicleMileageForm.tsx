@@ -23,7 +23,7 @@ type FormProps = {
 };
 
 const formSchema = z.object({
-  mileage: z.number(),
+  mileage: z.string(),
 });
 
 const VehicleMileageForm = ({ onBack, submitForm }: FormProps) => {
@@ -31,7 +31,7 @@ const VehicleMileageForm = ({ onBack, submitForm }: FormProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      mileage: 0,
+      mileage: "",
     },
   });
 
@@ -45,11 +45,10 @@ const VehicleMileageForm = ({ onBack, submitForm }: FormProps) => {
           name="mileage"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Project Name</FormLabel>
+              <FormLabel>Mileage</FormLabel>
               <FormControl>
-                <Input placeholder="Name" {...field} />
+                <Input placeholder="Mileage" {...field} />
               </FormControl>
-              Plate
               <FormMessage />
             </FormItem>
           )}

@@ -52,7 +52,7 @@ const VehicleDescForm = ({ submitForm }: FormProps) => {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Project Name</FormLabel>
+              <FormLabel>Name</FormLabel>
               <FormControl>
                 <Input placeholder="Name" {...field} />
               </FormControl>
@@ -65,7 +65,7 @@ const VehicleDescForm = ({ submitForm }: FormProps) => {
           name="make"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Project Name</FormLabel>
+              <FormLabel>Make</FormLabel>
               <FormControl>
                 <Input placeholder="Make" {...field} />
               </FormControl>
@@ -78,7 +78,7 @@ const VehicleDescForm = ({ submitForm }: FormProps) => {
           name="model"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Project Name</FormLabel>
+              <FormLabel>Model</FormLabel>
               <FormControl>
                 <Input placeholder="Model" {...field} />
               </FormControl>
@@ -91,7 +91,7 @@ const VehicleDescForm = ({ submitForm }: FormProps) => {
           name="year"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Project Name</FormLabel>
+              <FormLabel>Year</FormLabel>
               <FormControl>
                 <Input placeholder="Year" {...field} />
               </FormControl>

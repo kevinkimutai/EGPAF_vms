@@ -8,7 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { Textarea } from "../ui/textarea";
-import { Driver, Location, Type, VehicleType } from "@prisma/client";
+import { Driver, Location, Project, Type, VehicleType } from "@prisma/client";
 import { useEffect, useState } from "react";
 
 import { Label } from "../ui/label";
@@ -27,28 +27,28 @@ type ComponentProps = {
   submitForm: (data: any) => void;
 };
 
-const VehicleDriverForm = ({ onBack, submitForm }: ComponentProps) => {
-  const [drivers, setDrivers] = useState<Driver[]>();
+const VehicleProjectForm = ({ onBack, submitForm }: ComponentProps) => {
+  const [project, setProjects] = useState<Project[]>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [startVehicle, setStartVehicle] = useState<Driver>();
+  const [startProject, setStartProject] = useState<Project>();
 
   useEffect(() => {
-    const fetchDrivers = async () => {
+    const fetchProjects = async () => {
       setIsLoading(true);
-      const res = await fetch("/api/driver");
+      const res = await fetch("/api/project");
       const data = await res.json();
 
-      setDrivers(data);
+      setProjects(data);
       setIsLoading(false);
     };
 
-    fetchDrivers();
+    fetchProjects();
   }, []);
 
   const submitHandler = () => {
-    if (!startVehicle) return;
+    if (!startProject) return;
 
-    let data = { driverId: startVehicle.id };
+    let data = { projectId: startProject.id };
 
     submitForm(data);
   };
@@ -60,28 +60,26 @@ const VehicleDriverForm = ({ onBack, submitForm }: ComponentProps) => {
       ) : (
         <div className="w-full p-4">
           <div className="flex flex-col space-y-1.5 mt-5">
-            <Label htmlFor="startLocation">Choose Driver</Label>
+            <Label htmlFor="startLocation">Choose Project</Label>
             <Select
               onValueChange={(val: any) => {
-                setStartVehicle(val);
+                setStartProject(val);
               }}
             >
               <SelectTrigger id="startLocation">
                 <SelectValue placeholder="Select">
-                  {startVehicle ? (
-                    <span>
-                      {startVehicle.first_name} {startVehicle.last_name}
-                    </span>
+                  {startProject ? (
+                    <span>{startProject.name}</span>
                   ) : (
                     <span style={{ color: "gray" }}>Select a type</span>
                   )}
                 </SelectValue>
               </SelectTrigger>
               <SelectContent position="popper">
-                {drivers?.map((veh) => (
+                {project?.map((veh) => (
                   <>
                     <SelectItem value={veh} id={veh.id}>
-                      {veh.first_name} {veh.last_name}
+                      {veh.name}
                     </SelectItem>
                   </>
                 ))}
@@ -101,4 +99,4 @@ const VehicleDriverForm = ({ onBack, submitForm }: ComponentProps) => {
   );
 };
 
-export default VehicleDriverForm;
+export default VehicleProjectForm;

@@ -38,7 +38,7 @@ const VehicleNumberPlateForm = ({ onBack, submitForm }: FormProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      plate: "KCE....",
+      plate: "",
     },
   });
 
@@ -52,11 +52,10 @@ const VehicleNumberPlateForm = ({ onBack, submitForm }: FormProps) => {
           name="plate"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Project Name</FormLabel>
+              <FormLabel>Number Plate</FormLabel>
               <FormControl>
                 <Input placeholder="Name" {...field} />
               </FormControl>
-              Plate
               <FormMessage />
             </FormItem>
           )}
