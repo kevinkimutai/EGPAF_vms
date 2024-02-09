@@ -4,51 +4,60 @@ import React, { useState } from "react";
 import Modal from "./Modal";
 import * as z from "zod";
 
-import { Trip } from "@prisma/client";
+import { Trip, Vehicle } from "@prisma/client";
 
 import LocationForm from "../Form/LocationForm";
 import StaffForm from "../Form/StaffForm";
 import ReasonForm from "../Form/ReasonForm";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import VehicleDescForm from "../Form/VehicleDescForm";
+import VehicleNumberPlateForm from "../Form/VehicleNumberPlateForm";
+import VehicleMileageForm from "../Form/VehicleMileageForm";
+import VehicleTypeForm from "../Form/VehicleTypeForm";
+import VehicleDriverForm from "../Form/VehicleDriver";
 
 enum STEPS {
-  LOCATIONS = 0,
-  STAFF = 1,
-  REASON = 2,
+  DESCRIPTION = 0,
+  NUMBER_PLATE = 1,
+  MILEAGE = 2,
+  TYPE = 3,
+  PROJECT = 4,
+  DRIVER = 5,
 }
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  vehicleId: number;
 }
 
-const VehicleModal = ({ isOpen, onClose, vehicleId }: ModalProps) => {
-  const [step, setStep] = useState<STEPS>(STEPS.LOCATIONS);
-  const [formData, setFormData] = useState<Trip>();
+const VehicleModal = ({ isOpen, onClose }: ModalProps) => {
+  const [step, setStep] = useState<STEPS>(STEPS.DESCRIPTION);
+  const [formData, setFormData] = useState<Vehicle>();
   const router = useRouter();
 
   const handleSubmit = async (data: any) => {
-    if (step === 2) {
+    if (step === 5) {
       //SUBMIT
       setFormData((prev) => ({ ...prev, ...data }));
 
-      let tripData = { ...formData, vehicleId };
+      let vehicleData = { ...formData };
 
-      const res = await fetch("/api/trip", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(tripData),
-      });
+      console.log(vehicleData);
 
-      if (res.ok) {
-        onClose();
-        router.refresh();
-        toast.success("Successfully created trip");
-      }
+      // const res = await fetch("/api/vehicle", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(vehicleData),
+      // });
+
+      // if (res.ok) {
+      //   onClose();
+      //   router.refresh();
+      //   toast.success("Successfully created vehicle");
+      // }
 
       //TODO:ADD TOAST NOTIFICATIONS
     } else {
@@ -68,28 +77,48 @@ const VehicleModal = ({ isOpen, onClose, vehicleId }: ModalProps) => {
   let header;
   let FormComponent;
 
-  if (step === STEPS.LOCATIONS) {
+  if (step === STEPS.DESCRIPTION) {
     header = {
-      title: "Create Trip",
-      desc: "Where Are You Heading.",
+      title: "New Vehicle",
+      desc: "Add a new vehicle to your program.",
     };
-    FormComponent = <LocationForm submitForm={handleSubmit} />;
+    FormComponent = <VehicleDescForm submitForm={handleSubmit} />;
   }
 
-  if (step === STEPS.STAFF) {
+  if (step === STEPS.NUMBER_PLATE) {
     header = {
-      title: "Staff",
-      desc: "Enter Staff In The Trip",
+      title: "Number Plate",
+      desc: "Enter The Vehicles Number Plate",
     };
-    FormComponent = <StaffForm onBack={onBack} submitForm={handleSubmit} />;
+    FormComponent = (
+      <VehicleNumberPlateForm onBack={onBack} submitForm={handleSubmit} />
+    );
   }
-  if (step === STEPS.REASON) {
+  if (step === STEPS.MILEAGE) {
     header = {
-      title: "Reason For Trip",
-      desc: "Reason For Trip To Facility/Location",
+      title: "Mileage",
+      desc: "Current Mileage",
     };
     FormComponent = FormComponent = (
-      <ReasonForm onBack={onBack} submitForm={handleSubmit} />
+      <VehicleMileageForm onBack={onBack} submitForm={handleSubmit} />
+    );
+  }
+  if (step === STEPS.TYPE) {
+    header = {
+      title: "Vehicle Type",
+      desc: "Type of Vehicle",
+    };
+    FormComponent = FormComponent = (
+      <VehicleTypeForm onBack={onBack} submitForm={handleSubmit} />
+    );
+  }
+  if (step === STEPS.DRIVER) {
+    header = {
+      title: "Driver",
+      desc: "Assign Driver",
+    };
+    FormComponent = FormComponent = (
+      <VehicleDriverForm onBack={onBack} submitForm={handleSubmit} />
     );
   }
 

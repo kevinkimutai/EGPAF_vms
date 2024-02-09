@@ -19,7 +19,6 @@ type ComponentProps = Vehicle & { type: Type } & { project: Project } & {
 } & { trips: Trip[] & { endLocation: Location } };
 
 export function VehicleCard(props: ComponentProps) {
-  console.log("TRIPS", props);
   return (
     <Card className="w-[250px] md:w-[300px]">
       <CardHeader>

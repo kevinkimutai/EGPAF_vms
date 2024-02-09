@@ -11,10 +11,6 @@ import VehicleModal from "../Modal/VehicleModal";
 const VehicleWrapper = ({ vehicles }: any) => {
   const { isOpen, onOpen, onClose } = useVehicleModal();
 
-  const openModal = () => {
-    onOpen();
-  };
-
   return (
     <>
       <div className="ml-0 sm:ml-[20%] p-4 pt-[20vh] ">
@@ -22,7 +18,7 @@ const VehicleWrapper = ({ vehicles }: any) => {
           Vehicles
         </h1>
         <div className="flex justify-end items-center mb-4">
-          <VehicleFnWrapper open={openModal} />
+          <VehicleFnWrapper open={onOpen} />
         </div>
         <div className="flex overflow-x-scroll no-scrollbar gap-8 mb-8">
           {vehicles.map((vehicle: any) => (
@@ -36,9 +32,7 @@ const VehicleWrapper = ({ vehicles }: any) => {
         <VehicleTable />
       </div>
 
-      {isOpen && (
-        <VehicleModal isOpen={isOpen} onClose={onClose} vehicleId={vehicleId} />
-      )}
+      {isOpen && <VehicleModal isOpen={isOpen} onClose={onClose} />}
     </>
   );
 };

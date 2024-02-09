@@ -19,6 +19,8 @@ import { Button } from "../ui/button";
 export function VehicleTable() {
   const [vehicles, setVehicles] = useState([]);
 
+  console.log("VH", vehicles);
+
   useEffect(() => {
     const getAllVehicles = async () => {
       const res = await fetch("/api/vehicle");
