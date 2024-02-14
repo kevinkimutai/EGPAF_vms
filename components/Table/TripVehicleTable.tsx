@@ -49,6 +49,12 @@ export function TripVehicleTable({ vehicles }: ComponentProps) {
     calculateSumOfKilometersCovered(trips);
   }, [trips]);
 
+  useEffect(() => {
+    setTrips(vehicles[index].trips); // Update trips when index changes
+  }, [index, vehicles]);
+
+  console.log(trips);
+
   return (
     <>
       <div className="flex gap-4 justify-end items-center">
@@ -109,7 +115,7 @@ export function TripVehicleTable({ vehicles }: ComponentProps) {
               <TableCell>{trip.vehicle.project.name}</TableCell>
               <TableCell>{formatDate(trip.createdAt)}</TableCell>{" "}
               <TableCell>
-                <p className="font-semibold">Completed</p>
+                <p className="font-semibold">{trip.staff.length}</p>
               </TableCell>
               <TableCell className="text-right">
                 {trip.kilometersCovered}

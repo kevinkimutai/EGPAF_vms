@@ -54,7 +54,7 @@ export function VehicleCard(props: ComponentProps) {
 
           <p className="text-sm font-semibold">
             {/* @ts-ignore */}
-            {props.trips[0] ? props.trips[0].endLocation.facility : null}
+            {props.trips[0] ? props.trips[0].endLocation.facility : "NULL"}
           </p>
         </div>
 
@@ -64,7 +64,7 @@ export function VehicleCard(props: ComponentProps) {
           <p>
             {props.trips[0]
               ? getKmsCoveredByVehicle(props.trips[0].vehicleId)
-              : null}
+              : 0}
             KM
           </p>
         </div>

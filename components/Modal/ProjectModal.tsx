@@ -25,8 +25,9 @@ const ProjectModal = ({ isOpen, onClose }: ModalProps) => {
     setFormData((prev) => ({ ...prev, ...data }));
 
     let tripData = { ...formData };
+    console.log(formData);
 
-    const res = await fetch("/api/trip", {
+    const res = await fetch("/api/project", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
